@@ -1,4 +1,3 @@
-![Screenshot 2023-10-17 015428](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/5f36587a-c6b5-4f01-90ce-2360fc9cc574)# Jarkom-Modul-2-B25-2023
 
 ## Nama Anggota :
 1. Muhamad Faiz Fernanda (5025211186)
