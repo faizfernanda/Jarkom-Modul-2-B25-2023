@@ -1,4 +1,4 @@
-# Jarkom-Modul-2-B25-2023
+![Screenshot 2023-10-17 015428](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/5f36587a-c6b5-4f01-90ce-2360fc9cc574)# Jarkom-Modul-2-B25-2023
 
 ## Nama Anggota :
 1. Muhamad Faiz Fernanda (5025211186)
@@ -130,8 +130,11 @@ iface eth0 inet static
 - Melakukan set up pada file abimanyu.B25.com sesuai gambar berikut:
 
 ![Screenshot 2023-10-17 015428](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/51e0d4ed-d92e-477f-9a46-7cd4271e3e81)
+
 - lalu melakukan restart bind9
-  ![Screenshot 2023-10-17 015712](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/3e71d230-4854-4a39-bce3-399853f9bba3)
+
+   ![Screenshot 2023-10-17 015712](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/3e71d230-4854-4a39-bce3-399853f9bba3)
+
 - Bukti yaitu dapat di lakukan ping abimanyu.B25.com
   ![Screenshot 2023-10-17 020500](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/04aec149-105e-4d7a-af7d-7ed0c6b1f10a)
 ### 4. Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
@@ -142,8 +145,10 @@ iface eth0 inet static
 ![Screenshot 2023-10-17 020904](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/672bb0e9-b2ac-479f-8076-07ed119da017)
 ### 5. Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 #### Solusi 
+![Screenshot 2023-10-17 032430](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/6904d353-3bfe-4722-b1fc-74e5df27a0e1)
+
 - Edit file /etc/bind/named.conf.local pada yudhistira
-![Screenshot 2023-10-17 021044](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b78dfaab-dcab-407e-b16c-6c540d985b58)
+
 - Copykan file db.local pada path /etc/bind ke dalam folder abimanyu yang baru saja dibuat dan ubah namanya menjadi 3.21.10.in-addr.arpa
 ![Screenshot 2023-10-17 021147](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b289f21d-2c9c-4e23-a44a-26df6bb51752)
 - Edit file 3.21.10.in-addr.arpa menjadi seperti gambar di bawah ini
@@ -160,5 +165,25 @@ iface eth0 inet static
 ##### Untuk Abimanyu
 
 ![Screenshot 2023-10-17 021720](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/6e279c08-02f6-4dbc-94be-c346ac940ccf)
+- Selanjutnya melakukan configurasi pada  /etc/bind/named.conf.local pada werkudara sebagai DNS slave
+![Screenshot 2023-10-17 031731](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b68659e8-6ae2-4527-9445-fc8aa35051a6)
+- lalu kita menstop blind9 pada yudhistira
+- lalu kita uji ping pada server client
+![Screenshot 2023-10-17 031818](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/690b44b0-611e-4f6b-b5db-2a808e7c285b)
+### 7. Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
+#### Solusi 
+- Pada node Yudhistira, buka /etc/bind/abimanyu/abimanyu.B25.com lalu tambahkan script berikut :
+![Screenshot 2023-10-17 015428](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/9eb98a00-4123-48ca-bd8f-90d5ffded846)
 
+- Buka /etc/bind/named.conf.options, lalu comment bagian ‘dnssec-validation auto;’, dan tambahkan pada baris berikutnya :
+- ![Screenshot 2023-10-17 032148](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/646b2141-b32a-4bce-b319-3351418591cc)
+
+- Selanjutnya, restart server
+- Pada node Werkudara, buka /etc/bind/named.conf.local dan edit menjadi berikut
+  ![Screenshot 2023-10-17 032357](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/87e5d60f-d046-47d0-a856-53c78c56eac2)
+
+  - Lalu kita membuat folder baru /etc/bind/baratayuda dan membuat sebuah file baratayuda.abimanyu.B25.com dan tambahkan script berikut :
+    ![Screenshot 2023-10-17 032817](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b830497f-1ef9-4b9e-ae8d-c82c38c2e3b3)
+    - lalu, kita bisa mengetesnya dengan melakukan ping pada domain yang telah diatur sebelumnya melalui  client Nakula :
+![Screenshot 2023-10-17 032857](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/d86d7d0f-7c90-41fd-aea9-7ebb9fa0318a)
 
