@@ -427,7 +427,7 @@ nginx -t
    #### - Wisanggeni:8003
 #### Solusi 
 ##### Script
-- Jalankan script.sh berikut pada **prabukusuma** yaitu mensetting ip pada /etc/nginx/sites-available/jarkom
+- **prabukusuma** mensetting ip pada /etc/nginx/sites-available/jarkom
 ```
 
 server {
@@ -457,7 +457,7 @@ server {
  	access_log /var/log/nginx/jarkom_access.log;
 }
 ```
-- Jalankan script.sh berikut pada **Wisanggeni** yaitu mensetting ip pada /etc/nginx/sites-available/jarkom
+-  **Wisanggeni** mensetting ip pada /etc/nginx/sites-available/jarkom
 ```
 server {
 
@@ -487,6 +487,63 @@ server {
 }
 
 ```
+- **Abimanyu** mensetting ip pada /etc/nginx/sites-available/jarkom
+```
+server {
+
+ 	listen 8002;
+
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name 10.21.3.4;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/jarkom_error.log;
+ 	access_log /var/log/nginx/jarkom_access.log;
+}
+
+```
+- **Arjuna** mensetting ip pada /etc/nginx/sites-available/lb-jarkom
+```
+# Default menggunakan Round Robin
+ upstream myweb  {
+ 	server 10.21.3.3:8001; #IP prabukusuma
+ 	server 10.21.3.4:8002; #IP abimanyu
+    server 10.21.3.5:8003; #IP wisanggeni
+ }
+
+ server {
+ 	listen 80;
+ 	server_name arjuna.B25.com;
+
+ 	location / {
+ 	proxy_pass http://myweb;
+ 	} 
+}
+
+```
+- Hasil
+
+![Screenshot 2023-10-17 175952](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/48cd138d-5e47-421f-abdd-ff552b27a563)
+
+![Screenshot 2023-10-17 180010](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/da65586f-c3d5-415e-a714-682687dc0a1d)
+
+![Screenshot 2023-10-17 180056](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/fd75626f-a864-4147-b8a5-58d0b0337717)
+
 
 ### Nomer 11
 ### Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
