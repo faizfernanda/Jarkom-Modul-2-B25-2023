@@ -429,7 +429,8 @@ nginx -t
 
 ![Screenshot 2023-10-17 180010](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/bf5d04b3-247b-4d7f-ad20-f2efa1298c7f)
 
-![Uploading Screenshot 2023-10-17 180056.png…]()
+![Screenshot 2023-10-17 180056](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/a080d3d0-94f9-4f51-b0aa-ee8c4e70f91e)
+
 
 ### Nomer 10
 ### Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
