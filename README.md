@@ -1,4 +1,4 @@
-![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/6f676c94-71c7-4577-bd42-ec8799fcfb02)
+
 ## Nama Anggota :
 | No | Nama| NRP|
 | ------- | ------- | ------- |
@@ -201,25 +201,29 @@ iface eth0 inet static
 ![Screenshot 2023-10-17 015428](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/9eb98a00-4123-48ca-bd8f-90d5ffded846)
 
 - Buka /etc/bind/named.conf.options, lalu comment bagian ‘dnssec-validation auto;’, dan tambahkan pada baris berikutnya :
-- ![Screenshot 2023-10-17 032148](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/646b2141-b32a-4bce-b319-3351418591cc)
+![Screenshot 2023-10-17 032148](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/646b2141-b32a-4bce-b319-3351418591cc)
 
 - Selanjutnya, restart server
 - Pada node Werkudara, buka /etc/bind/named.conf.local dan edit menjadi berikut
-  ![Screenshot 2023-10-17 032357](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/87e5d60f-d046-47d0-a856-53c78c56eac2)
+![Screenshot 2023-10-17 032357](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/87e5d60f-d046-47d0-a856-53c78c56eac2)
 
   - Lalu kita membuat folder baru /etc/bind/baratayuda dan membuat sebuah file baratayuda.abimanyu.B25.com dan tambahkan script berikut :
-    ![Screenshot 2023-10-17 032817](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b830497f-1ef9-4b9e-ae8d-c82c38c2e3b3)
+
+![Screenshot 2023-10-17 032817](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b830497f-1ef9-4b9e-ae8d-c82c38c2e3b3)
     - lalu, kita bisa mengetesnya dengan melakukan ping pada domain yang telah diatur sebelumnya melalui  client Nakula :
+
 ![Screenshot 2023-10-17 032857](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/d86d7d0f-7c90-41fd-aea9-7ebb9fa0318a)
 
 ### Nomer 8
 ### Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 #### Solusi 
 - Untuk menambahkan subdomain tersebut, kita hanya menambahkan script /etc/bind/baratayuda.abimanyu.B25.com pada node Werkudara seperti berikut :
+
 ![Screenshot 2023-10-17 134946](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/d1d1192f-25b5-4a03-a51b-db0bb1be445d)
 
 - Lalu, kita bisa mengetesnya dengan melakukan ping pada rjp.baratayuda.abimanyu.b25.com melalui client Nakula
-  ![Screenshot 2023-10-17 135015](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/e9871d30-060a-4f69-b7ff-6a84e4398909)
+
+![Screenshot 2023-10-17 135015](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/e9871d30-060a-4f69-b7ff-6a84e4398909)
 
 ### Nomer 9
 ### Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
