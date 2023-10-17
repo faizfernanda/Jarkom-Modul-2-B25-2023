@@ -11,8 +11,8 @@
 ![Screenshot 2023-10-17 013741](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/a5c5edb2-3434-4571-9b7e-6b6c10940e26)
 
 ## Daftar Soal
-- [Soal 1](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/###-Nomer-1) <br/>
-- [Soal 2](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/###-Nomer-2) <br/>
+- [Soal 1](#Nomer-1) <br/>
+- [Soal 2](#Nomer-2) <br/>
 
 ### Nomer 1
 ### Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut. 
