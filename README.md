@@ -1,4 +1,4 @@
-
+![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/6f676c94-71c7-4577-bd42-ec8799fcfb02)
 ## Nama Anggota :
 | No | Nama| NRP|
 | ------- | ------- | ------- |
@@ -21,6 +21,7 @@
 - [Soal 8](#Nomer-8) <br/>
 - [Soal 9](#Nomer-9) <br/>
 - [Soal 10](#Nomer-10) <br/>
+- [Soal 11](#Nomer-11) <br/>
 
 ### Nomer 1
 ### Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut. 
@@ -473,3 +474,328 @@ server {
 }
 
 ```
+
+### Nomer 11
+### Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+#### Solusi
+- Pertama, install apache, wget untuk download file, unzip untuk unzip, dan  folder pada worker Abimanyu dengan cara ketik command dibawah.
+  ```
+  apt-get install wget -y 
+  apt-get install unzip -y
+  apt-get install apache2 -y
+  apt-get install libapache2-mod-php7.0
+  ```
+- Lalu kita download resource yang telah disediakan dan unzip lalu pindahkan
+  ```
+  wget -O '/var/www/abimanyu.B25.com.zip' 'https://drive.usercontent.google.com/download?id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc'
+  unzip -o /var/www/abimanyu.B25.com.zip -d /var/www/
+  mv /var/www/abimanyu.yyy.com /var/www/abimanyu.B25.com
+  ```
+- Setting /etc/apache2/sites-available/abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:80>
+        ServerName abimanyu.B25.com
+        ServerAlias www.abimanyu.B25.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/abimanyu.B25
+
+        <Directory /var/www/abimanyu.B25>
+            Options +FollowSymLinks -Multiviews
+            AllowOverride All
+        </Directory>
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
+- Enable konfigurasi dan restart server apache
+  ```
+  a2ensite abimanyu.B25.com.conf
+  service apache2 restart
+  ```
+- Testing
+  ```
+  lynx abimanyu.B25.com
+  ```
+- Hasil
+  
+  ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/ed3c41b9-bd0c-41ab-90cd-eeb4b0c46a82)
+
+### Nomer 12
+### Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
+#### Solusi
+- Tambahkan script dibawah pada /var/www/abimanyu.B25/.htaccess
+  ```
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php/$1 [L]
+  ```
+- Testing
+  ```
+  lynx abimanyu.B25.com/home
+  ```
+- Hasil
+
+  ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/03e02ac7-ef0c-476b-87e4-3c88f94c0fff)
+
+### Nomer 13
+### Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+- Download resource yang telah disediakan dan unzip lalu pindahkan
+  ```
+  wget -O '/var/www/parikesit.abimanyu.B25.com.zip' 'https://drive.usercontent.google.com/download?id=1LdbYntiYVF_NVNgJis1GLCLPEGyIOreS'
+  unzip -o /var/www/parikesit.abimanyu.B25.com.zip -d /var/www/
+  mv /var/www/parikesit.abimanyu.yyy.com /var/www/parikesit.abimanyu.B25
+  ```
+- Setting /etc/apache2/sites-available/parikesit.abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/parikesit.abimanyu.B26
+        ServerName parikesit.abimanyu.B25.com
+        ServerAlias www.parikesit.abimanyu.B25.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </Virtualhost>
+  ```
+- Enable konfigurasi dan restart server apache
+  ```
+  a2ensite parikesit.abimanyu.B25.com
+  service apache2 restart
+  ```
+- Testing
+  ```
+  lynx parikseit.abimanyu.B25.com
+  ```
+- Hasil
+
+  ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/550f76e3-192d-4fa9-80b9-5ab1acd16c1d)
+
+### Nomer 14
+### Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
+#### Solusi
+- Buat folder secret
+  ```
+  mkdir /var/www/parikesit.abimanyu.aB25/secret
+  ```
+- Setting /etc/apache2/sites-available/parikesit.abimanyu.b25.com.conf
+  ```
+  <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/parikesit.abimanyu.B25
+        ServerName parikesit.abimanyu.B25.com
+        ServerAlias www.parikesit.abimanyu.B25.com
+
+        <Directory /var/www/parikesit.abimanyu.B25/public>
+                Options +Indexes
+        </Directory>
+        <Directory /var/www/parikesit.abimanyu.B25/secret>
+                Options -Indexes +FollowSymLinks
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </Virtualhost>
+  ```
+- Testing
+  ```
+   lynx parikseit.abimanyu.B25.com/public
+  ```
+
+- Hasil
+
+  ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/925bbec0-aa2a-4c2e-bdd1-3e221023cf37)
+
+### Nomer 15
+### Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+#### Solusi
+- Setting /etc/apache2/sites-available/parikesit.abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/parikesit.abimanyu.B25
+        ServerName parikesit.abimanyu.B25.com
+        ServerAlias www.parikesit.abimanyu.B25.com
+
+        <Directory /var/www/parikesit.abimanyu.B25/public>
+                Options +Indexes
+        </Directory>
+        <Directory /var/www/parikesit.abimanyu.B25/secret>
+                Options -Indexes +FollowSymLinks
+        </Directory>
+
+        ErrorDocument 403 /error/403.html
+        ErrorDocument 404 /error/404.html
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </Virtualhost>
+  ```
+- Testing
+  ```
+  lynx parikseit.abimanyu.B25.com/js
+  ```
+- Hasil
+
+
+### Nomer 16
+### Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js
+#### Solusi
+- Setting /etc/apache2/sites-available/parikesit.abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/parikesit.abimanyu.B25
+        ServerName parikesit.abimanyu.B25.com
+        ServerAlias www.parikesit.abimanyu.B25.com
+
+        <Directory /var/www/parikesit.abimanyu.B25/public>
+                Options +Indexes
+        </Directory>
+        <Directory /var/www/parikesit.abimanyu.B25/secret>
+                Options -Indexes +FollowSymLinks
+        </Directory>
+
+        ErrorDocument 403 /error/403.html
+        ErrorDocument 404 /error/404.html
+
+        Alias "/js" "/var/www/parikesit.abimanyu.B25/public/js"
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </Virtualhost>
+  ```
+- Testing
+  ```
+  lynx parikseit.abimanyu.B25.com/js
+  ```
+- Hasil
+
+ ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/20b2f7c6-c3c5-49df-8a37-fa53911fc95c)
+
+### Nomer 17
+### Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+#### Solusi
+- Download resource yang telah disediakan dan unzip lalu pindahkan
+  ```
+  wget -O '/var/www/rjp.baratayuda.abimanyu.B25.com.zip' 'https://drive.usercontent.google.com/download?id=1pPSP7yIR05JhSFG67RVzgkb-VcW9vQO6'
+  unzip -o /var/www/rjp.baratayuda.abimanyu.B25.com.zip -d /var/www/
+  mv /var/www/rjp.baratayuda.abimanyu.yyy.com /var/www/rjp.baratayuda.abimanyu.B25
+  ```
+- Setting /etc/apache2/sites-available/rjp.baratayuda.abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:14000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.B25
+        ServerName rjp.baratayuda.abimanyu.B25.com
+        ServerAlias www.rjp.baratayuda.abimanyu.B25.com
+        
+        <Directory /var/www/rjp.baratayuda.abimanyu.B25>
+           AuthType Basic
+           AuthName "Restricted Access"
+           AuthUserFile /etc/apache2/.htpasswd
+           Require valid-user
+        </Directory>
+
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+
+  <VirtualHost *:14400>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.B25
+        ServerName rjp.baratayuda.abimanyu.B25.com
+        ServerAlias www.rjp.baratayuda.abimanyu.B25.com
+        
+        <Directory /var/www/rjp.baratayuda.abimanyu.B25>
+           AuthType Basic
+           AuthName "Restricted Access"
+           AuthUserFile /etc/apache2/.htpasswd
+           Require valid-user
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
+- Setting /etc/apache2/ports.conf
+  ```
+  Listen 14000
+  Listen 14400
+  ```
+- Testing
+  ```
+  lynx rjp.baratayuda.abimanyu.B25:14000
+  ```
+- Hasil
+
+  ![image](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/88433109/b58f7022-6a89-4144-8d4a-49e05030c3bb)
+
+  (memerlukan autentikasi karena soal 18)
+
+### Nomer 18
+### Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+#### Solusi
+- Setting untuk membuat password
+  ```
+  htpasswd -c /etc/apache2/.htpasswd Wayang
+  ```
+- Setting /etc/apache2/sites-available/rjp.baratayuda.abimanyu.B25.com.conf
+  ```
+  <VirtualHost *:14000>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.B25
+        ServerName rjp.baratayuda.abimanyu.B25.com
+        ServerAlias www.rjp.baratayuda.abimanyu.B25.com
+        
+        <Directory /var/www/rjp.baratayuda.abimanyu.B25>
+           AuthType Basic
+           AuthName "Restricted Access"
+           AuthUserFile /etc/apache2/.htpasswd
+           Require valid-user
+        </Directory>
+
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+
+  <VirtualHost *:14400>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.B25
+        ServerName rjp.baratayuda.abimanyu.B25.com
+        ServerAlias www.rjp.baratayuda.abimanyu.B25.com
+        
+        <Directory /var/www/rjp.baratayuda.abimanyu.B25>
+           AuthType Basic
+           AuthName "Restricted Access"
+           AuthUserFile /etc/apache2/.htpasswd
+           Require valid-user
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
+
+### Nomer 19
+### Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+- Setting /etc/nginx/sites-available/jarkom, tambahkan script dibawah pdaa file sebelumnya
+ ```
+ server {
+	listen 8002;
+	server_name _;
+
+	return 301 http://www.abimanyu.B25.com;
+}
+ ```
+
+
+
+
+
