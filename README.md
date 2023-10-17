@@ -22,6 +22,15 @@
 - [Soal 9](#Nomer-9) <br/>
 - [Soal 10](#Nomer-10) <br/>
 - [Soal 11](#Nomer-11) <br/>
+- [Soal 12](#Nomer-12) <br/>
+- [Soal 13](#Nomer-13) <br/>
+- [Soal 14](#Nomer-14) <br/>
+- [Soal 15](#Nomer-15) <br/>
+- [Soal 16](#Nomer-16) <br/>
+- [Soal 17](#Nomer-17) <br/>
+- [Soal 18](#Nomer-18) <br/>
+- [Soal 19](#Nomer-19) <br/>
+- [Soal 20](#Nomer-20) <br/>
 
 ### Nomer 1
 ### Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut. 
@@ -798,6 +807,20 @@ server {
 	return 301 http://www.abimanyu.B25.com;
 }
  ```
+
+### Nomer 20
+### Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+#### Solusi
+- Setting /var/www/parikesit.abimanyu.B25/.htaccess
+  ```
+  RewriteCond %{REQUEST_URI} /public/images
+  RewriteCond %{REQUEST_URI} abimanyu
+  RewriteRule ^(.*)$ public/images/abimanyu.png [L,R=301]
+  ```
+- Testing
+  ```
+  lynx parikesit.abimanyu.B25.com/public/images/halo-abimanyu.png
+  ```
 
 
 
