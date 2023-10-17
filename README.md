@@ -3,7 +3,7 @@
 | No | Nama| NRP|
 | ------- | ------- | ------- |
 | 1 | Muhamad Faiz Fernanda | 5025211186|
-| Baris 2 | Nilai C | Nilai D |
+| 2| Tigo S Yoga | 5025211125 |
 
 
 ## Topologi
