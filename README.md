@@ -129,14 +129,17 @@ iface eth0 inet static
 - Melakukan configurasi pada dns master yaitu pada server Yudhistira
 
 ![Screenshot 2023-10-17 015212](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/0f7a6384-ccb8-4380-aeb2-87fe037681c2)
+
 - Membuat folder arjuna di dalam /etc/bind
 
 ![Screenshot 2023-10-17 015222](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b4abf8e3-d22c-48a6-8ca7-fa52622d180c)
+
 - Copykan file db.local pada path /etc/bind ke dalam folder arjuna  yang baru saja dibuat dan ubah namanya menjadi arjuna.B25.com
 
 ![Screenshot 2023-10-17 015237](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/4e185d7e-a682-4c84-9be3-5cf5de843b13)
 - Melakukan set up pada file arjuna.B25.com sesuai gambar berikut :
-  ![Screenshot 2023-10-17 020316](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/9bfc150a-023e-4227-bc9f-90f4d7524788)
+
+![Screenshot 2023-10-17 020316](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/9bfc150a-023e-4227-bc9f-90f4d7524788)
 
 - lalu melakukan restart bind9
   
@@ -163,16 +166,19 @@ iface eth0 inet static
 
 - lalu melakukan restart bind9
 
-   ![Screenshot 2023-10-17 015712](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/3e71d230-4854-4a39-bce3-399853f9bba3)
+![Screenshot 2023-10-17 015712](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/3e71d230-4854-4a39-bce3-399853f9bba3)
 
 - Bukti yaitu dapat di lakukan ping abimanyu.B25.com
-  ![Screenshot 2023-10-17 020500](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/04aec149-105e-4d7a-af7d-7ed0c6b1f10a)
+
+![Screenshot 2023-10-17 020500](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/04aec149-105e-4d7a-af7d-7ed0c6b1f10a)
 ### Nomer 4
 ### Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 #### Solusi 
 - Melakukan kofigurasi pada file abimanyu.B25.com
+
 ![Screenshot 2023-10-17 020828](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/6b360354-fb66-461d-b18c-e3f4158155a9)
 - Berikut ini saya coba melakukan ping parikesit.abimanyu.B25.com dalam salah satu server yaitu nakula
+
 ![Screenshot 2023-10-17 020904](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/672bb0e9-b2ac-479f-8076-07ed119da017)
 ### Nomer 5
 ### Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
@@ -188,7 +194,8 @@ iface eth0 inet static
 
 - Kemudian restart bind9
 - Untuk mengecek apakah konfigurasi sudah benar atau belum, lakukan perintah berikut pada client nakula
-  ![Screenshot 2023-10-17 021441](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/5be3330c-2ee4-43fa-b000-698544755eba)
+
+![Screenshot 2023-10-17 021441](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/5be3330c-2ee4-43fa-b000-698544755eba)
 ### Nomer 6
 ### Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 #### Solusi 
@@ -199,9 +206,11 @@ iface eth0 inet static
 
 ![Screenshot 2023-10-17 021720](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/6e279c08-02f6-4dbc-94be-c346ac940ccf)
 - Selanjutnya melakukan configurasi pada  /etc/bind/named.conf.local pada werkudara sebagai DNS slave
+
 ![Screenshot 2023-10-17 031731](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/b68659e8-6ae2-4527-9445-fc8aa35051a6)
 - lalu kita menstop blind9 pada yudhistira
 - lalu kita uji ping pada server client
+
 ![Screenshot 2023-10-17 031818](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/690b44b0-611e-4f6b-b5db-2a808e7c285b)
 ### Nomer 7
 ### Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
@@ -287,7 +296,7 @@ iface eth0 inet static
    nginx -t
 
   ```
-  - Pada **Wisanggeni**
+- Pada **Wisanggeni**
     ```
 echo nameserver 192.168.122.1 > /etc/resolv.conf
 apt-get update && apt install nginx php php-fpm -y
@@ -387,9 +396,6 @@ nginx -t
 
 - Pada **Arjuna** sebagai **Load balancer**
 ```
-
-Load balancer
-
 echo nameserver 192.168.122.1 > /etc/resolv.conf
 apt-get update && apt install nginx  -y
 
@@ -419,6 +425,11 @@ nginx -t
 ```
 - Bukti Ketika udah Berhasil,melakukan lynx pada client server dengan **lynx arjuna.B25.com**
 
+![Screenshot 2023-10-17 175952](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/435e4c4d-d6b1-4acd-a2a4-46b9e9f87a6f)
+
+![Screenshot 2023-10-17 180010](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/bf5d04b3-247b-4d7f-ad20-f2efa1298c7f)
+
+![Uploading Screenshot 2023-10-17 180056.png…]()
 
 ### Nomer 10
 ### Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
@@ -429,7 +440,6 @@ nginx -t
 ##### Script
 - **prabukusuma** mensetting ip pada /etc/nginx/sites-available/jarkom
 ```
-
 server {
 
  	listen 8001;
@@ -457,7 +467,7 @@ server {
  	access_log /var/log/nginx/jarkom_access.log;
 }
 ```
--  **Wisanggeni** mensetting ip pada /etc/nginx/sites-available/jarkom
+- **Wisanggeni** mensetting ip pada /etc/nginx/sites-available/jarkom
 ```
 server {
 
