@@ -186,3 +186,262 @@ iface eth0 inet static
     - lalu, kita bisa mengetesnya dengan melakukan ping pada domain yang telah diatur sebelumnya melalui  client Nakula :
 ![Screenshot 2023-10-17 032857](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/d86d7d0f-7c90-41fd-aea9-7ebb9fa0318a)
 
+### 8.Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
+#### Solusi 
+- Untuk menambahkan subdomain tersebut, kita hanya menambahkan script /etc/bind/baratayuda.abimanyu.B25.com pada node Werkudara seperti berikut :
+![Screenshot 2023-10-17 134946](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/d1d1192f-25b5-4a03-a51b-db0bb1be445d)
+
+- Lalu, kita bisa mengetesnya dengan melakukan ping pada rjp.baratayuda.abimanyu.b25.com melalui client Nakula
+  ![Screenshot 2023-10-17 135015](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/assets/101172294/e9871d30-060a-4f69-b7ff-6a84e4398909)
+
+### 9. Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
+#### Solusi 
+##### Script
+- jalankan pada node **Prabukusuma**
+  ```
+  echo nameserver 192.168.122.1 > /etc/resolv.conf
+  apt-get update && apt install nginx php php-fpm -y
+  php -v
+  mkdir /var/www/jarkom
+  touch /var/www/jarkom/index.php
+  echo ' 
+   <?php
+	echo "Halo, Kamu berada di Prabukusuma";
+   ?>' > /var/www/jarkom/index.php
+
+  cd /etc/nginx/sites-available
+  touch /etc/nginx/sites-available/jarkom
+  echo '
+  server {
+
+ 	listen 80;
+        #sesuai dengan modul untuk no 10
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name _;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/jarkom_error.log;
+ 	access_log /var/log/nginx/jarkom_access.log;
+   }' > /etc/nginx/sites-available/jarkom
+   
+   ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
+   rm -rf /etc/nginx/sites-enabled/default
+   service php7.0-fpm start
+   service nginx restart
+   nginx -t
+
+  ```
+  - Pada **Wisanggeni**
+    ```
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+apt-get update && apt install nginx php php-fpm -y
+php -v
+mkdir /var/www/jarkom
+touch /var/www/jarkom/index.php
+echo ' 
+<?php
+echo "Halo, Kamu berada di Wsanggeni";
+?>' > /var/www/jarkom/index.php
+
+cd /etc/nginx/sites-available
+touch /etc/nginx/sites-available/jarkom
+echo '
+server {
+
+ 	listen 80;
+    #sesuai dengan modul untuk no 10
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name _;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    	}
+
+    	location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 		error_log /var/log/nginx/jarkom_error.log;
+ 		access_log /var/log/nginx/jarkom_access.log;
+	}' > /etc/nginx/sites-available/jarkom
+   
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+service php7.0-fpm start
+service nginx restart
+nginx -t
+    ```
+- Pada **Abimanyu**
+
+```
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+apt-get update && apt install nginx php php-fpm -y
+php -v
+mkdir /var/www/jarkom
+touch /var/www/jarkom/index.php
+echo ' 
+<?php
+echo "Halo, Kamu berada di abimanyu";
+?>' > /var/www/jarkom/index.php
+
+cd /etc/nginx/sites-available
+touch /etc/nginx/sites-available/jarkom
+echo '
+server {
+
+ 	listen 8002;
+
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name 10.21.3.4;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/jarkom_error.log;
+ 	access_log /var/log/nginx/jarkom_access.log;
+    }' > /etc/nginx/sites-available/jarkom
+   
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+service php7.0-fpm start
+service nginx restart
+nginx -t
+```
+
+- Pada **Arjuna** sebagai **Load balancer**
+```
+
+Load balancer
+
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+apt-get update && apt install nginx  -y
+
+cd /etc/nginx/sites-available
+touch /etc/nginx/sites-available/lb-jarkom
+echo '
+ # Default menggunakan Round Robin
+ upstream myweb  {
+ 	server 10.21.3.3; #IP prabukusuma
+ 	server 10.21.3.4; #IP abimanyu
+    server 10.21.3.5; #IP wisanggeni
+ }
+
+ server {
+ 	listen 80;
+ 	server_name arjuna.B25.com;
+
+ 	location / {
+ 	proxy_pass http://myweb;
+ 	} 
+}' > /etc/nginx/sites-available/lb-jarkom
+   
+ln -s /etc/nginx/sites-available/lb-jarkom /etc/nginx/sites-enabled
+service nginx restart
+nginx -t
+
+```
+- Bukti Ketika udah Berhasil,melakukan lynx pada client server dengan **lynx arjuna.B25.com**
+
+
+### 10. Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
+   #### - Prabakusuma:8001
+   #### - Abimanyu:8002
+   #### - Wisanggeni:8003
+#### Solusi 
+##### Script
+- Jalankan script.sh berikut pada **prabukusuma** yaitu mensetting ip pada /etc/nginx/sites-available/jarkom
+```
+
+server {
+
+ 	listen 8001;
+    #sesuai dengan modul untuk no 10
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name 10.21.3.3;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/jarkom_error.log;
+ 	access_log /var/log/nginx/jarkom_access.log;
+}
+```
+- Jalankan script.sh berikut pada **Wisanggeni** yaitu mensetting ip pada /etc/nginx/sites-available/jarkom
+```
+server {
+
+ 	listen 8003;
+    #sesuai dengan modul untuk no 10
+ 	root /var/www/jarkom;
+
+ 	index index.php index.html index.htm;
+ 	server_name 10.21.3.5;
+
+ 	location / {
+ 			try_files $uri $uri/ /index.php?$query_string;
+ 	}
+
+ 	# pass PHP scripts to FastCGI server
+ 	location ~ \.php$ {
+ 	    include snippets/fastcgi-php.conf;
+ 	    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+ 			deny all;
+ 	}
+
+ 	error_log /var/log/nginx/jarkom_error.log;
+ 	access_log /var/log/nginx/jarkom_access.log;
+}
+
+```
