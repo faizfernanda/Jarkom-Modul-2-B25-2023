@@ -12,6 +12,7 @@
 
 ## Daftar Soal
 - [Soal 1](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/#-Nomer-1) <br/>
+- [Soal 2](https://github.com/faizfernanda/Jarkom-Modul-2-B25-2023/#-Nomer-2) <br/>
 
 ### Nomer 1
 ### Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut. 
@@ -104,7 +105,8 @@ iface eth0 inet static
 
   ```
 ## Pemabahasan Soal
-### 2. Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok
+### Nomer 2
+### Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok
 #### Solusi 
 - Melakukan configurasi pada dns master yaitu pada server Yudhistira
 
